@@ -1,10 +1,9 @@
 module Trading.Engine.Client exposing (..)
 
+import String exposing (contains, toLower)
+import Regex
+
 import Morphir.SDK.StatefulApp exposing (StatefulApp(..))
-
--- import String exposing (contains, toLower)
--- import Regex exposing (Regex, match, regex)
-
 
 
 -- Types
@@ -25,7 +24,7 @@ type alias Client =
 type ValidationError
     = NameCannotBeBlank
     | EmailCannotBeNull
-    -- | EmailIsInvalid
+    | EmailIsInvalid
     | EmailAlreadyExists
     | InvalidPassword
     
@@ -38,16 +37,12 @@ validateClientName name =
     else
         Ok name
 
-validateClientEmail : (String -> Bool) -> String -> Result ValidationError String
-validateClientEmail emailExists email =
-    if email == Nothing then
-        Err EmailCannotBeNull
-    -- else if not (isValidEmail email) then
-    --     Err EmailIsInvalid
-    else if emailExists email then
-        Err EmailAlreadyExists
-    else
-        Ok email
+-- validateClientEmail : String -> Result ValidationError String
+-- validateClientEmail email =
+--     if String.isEmpty email then
+--         Err EmailCannotBeNull
+--     else
+--         Ok email
 
 validateClientPassword : String -> Result ValidationError String
 validateClientPassword password =
@@ -63,39 +58,32 @@ validateClientPassword password =
     else
         Ok password
 
--- isValidEmail : String -> Bool
--- isValidEmail email =
---     -- Simplified email regex check
---     let
---         regex =
---             "^[A-Za-z0-9+_.-]+@(.+)$"
---     in
---     Regex.contains (Regex.fromString regex) email
+isValidEmail : String -> Bool
+isValidEmail email =
+    -- Simplified email regex check
+    let
+        regex =
+            "^[A-Za-z0-9+_.-]+@(.+)$"
+    in
+    Regex.contains (Regex.fromString regex) email
+
+
+validateEmail : String -> Result ValidationError String
+validateEmail email =
+    let
+        emailRegex : Regex.Regex
+        emailRegex =
+            Regex.fromString "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
 
 
 
--- type alias ValidationResult =
---     { isValid : Bool
---     , message : String
---     }
-
- 
-
--- validateEmail : String -> ValidationResult
--- validateEmail email =
---     let
---         emailRegex : Regex
---         emailRegex =
---             regex "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-
- 
-
---         lowercaseEmail =
---             toLower email
---     in
---     if String.isEmpty email then
---         { isValid = False, message = "Email cannot be empty" }
---     else if match emailRegex lowercaseEmail == Just lowercaseEmail then
---         { isValid = True, message = "Email is valid" }
---     else
---         { isValid = False, message = "Email is not in a valid format" }
+        lowercaseEmail =
+            toLower email
+    in
+    if String.isEmpty email then
+        Err EmailCannotBeNull
+    else if Client.isValidEmail email then
+        Ok email
+    else
+        Err EmailIsInvalid
+      

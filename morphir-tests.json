@@ -1,0 +1,126 @@
+[
+    [
+        [
+            [
+                [
+                    "trading"
+                ],
+                [
+                    "engine"
+                ]
+            ],
+            [
+                [
+                    "client"
+                ]
+            ],
+            [
+                "validate",
+                "client",
+                "name"
+            ]
+        ],
+        [
+            {
+                "inputs": [
+                    "John Doe"
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "John Doe"
+                ],
+                "description": ""
+            },
+            {
+                "inputs": [
+                    ""
+                ],
+                "expectedOutput": [
+                    "err",
+                    [
+                        "nameCannotBeBlank"
+                    ]
+                ],
+                "description": ""
+            },
+            {
+                "inputs": [
+                    "    "
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "    "
+                ],
+                "description": ""
+            },
+            {
+                "inputs": [
+                    "       "
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "       "
+                ],
+                "description": "Testing an empty string"
+            }
+        ]
+    ],
+    [
+        [
+            [
+                [
+                    "trading"
+                ],
+                [
+                    "engine"
+                ]
+            ],
+            [
+                [
+                    "client"
+                ]
+            ],
+            [
+                "validate",
+                "client",
+                "password"
+            ]
+        ],
+        [
+            {
+                "inputs": [
+                    "password"
+                ],
+                "expectedOutput": [
+                    "err",
+                    [
+                        "invalidPassword"
+                    ]
+                ],
+                "description": "Testing an invalid password"
+            },
+            {
+                "inputs": [
+                    "Pa$$word"
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "Pa$$word"
+                ],
+                "description": "Testing a valid password"
+            },
+            {
+                "inputs": [
+                    "pass"
+                ],
+                "expectedOutput": [
+                    "err",
+                    [
+                        "invalidPassword"
+                    ]
+                ],
+                "description": "Testing a password of short length"
+            }
+        ]
+    ]
+]

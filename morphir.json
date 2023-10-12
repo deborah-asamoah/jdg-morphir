@@ -1,7 +1,4 @@
 {
     "name": "Trading.Engine",
-    "sourceDirectory": "src",
-    "exposedModules": [
-        "Trading.Emgine.Client"
-    ]
+    "sourceDirectory": "src"
 }
