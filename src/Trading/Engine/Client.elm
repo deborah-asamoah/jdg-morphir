@@ -1,8 +1,5 @@
 module Trading.Engine.Client exposing (..)
 
-import String exposing (contains, toLower)
-import Regex
-
 import Morphir.SDK.StatefulApp exposing (StatefulApp(..))
 
 
@@ -37,12 +34,6 @@ validateClientName name =
     else
         Ok name
 
--- validateClientEmail : String -> Result ValidationError String
--- validateClientEmail email =
---     if String.isEmpty email then
---         Err EmailCannotBeNull
---     else
---         Ok email
 
 validateClientPassword : String -> Result ValidationError String
 validateClientPassword password =
@@ -58,32 +49,9 @@ validateClientPassword password =
     else
         Ok password
 
-isValidEmail : String -> Bool
-isValidEmail email =
-    -- Simplified email regex check
-    let
-        regex =
-            "^[A-Za-z0-9+_.-]+@(.+)$"
-    in
-    Regex.contains (Regex.fromString regex) email
-
-
 validateEmail : String -> Result ValidationError String
-validateEmail email =
-    let
-        emailRegex : Regex.Regex
-        emailRegex =
-            Regex.fromString "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-
-
-
-        lowercaseEmail =
-            toLower email
-    in
+validateEmail email =       
     if String.isEmpty email then
         Err EmailCannotBeNull
-    else if Client.isValidEmail email then
-        Ok email
     else
-        Err EmailIsInvalid
-      
+        Ok email

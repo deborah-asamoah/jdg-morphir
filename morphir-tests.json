@@ -122,5 +122,70 @@
                 "description": "Testing a password of short length"
             }
         ]
+    ],
+    [
+        [
+            [
+                [
+                    "trading"
+                ],
+                [
+                    "engine"
+                ]
+            ],
+            [
+                [
+                    "client"
+                ]
+            ],
+            [
+                "validate",
+                "email"
+            ]
+        ],
+        [
+            {
+                "inputs": [
+                    ""
+                ],
+                "expectedOutput": [
+                    "err",
+                    [
+                        "emailCannotBeNull"
+                    ]
+                ],
+                "description": "Testing for an empty email"
+            },
+            {
+                "inputs": [
+                    "john@example.com"
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "john@example.com"
+                ],
+                "description": "Testing for a non-empty email"
+            },
+            {
+                "inputs": [
+                    "john "
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "john "
+                ],
+                "description": ""
+            },
+            {
+                "inputs": [
+                    "    "
+                ],
+                "expectedOutput": [
+                    "ok",
+                    "    "
+                ],
+                "description": ""
+            }
+        ]
     ]
 ]
